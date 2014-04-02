@@ -6,4 +6,8 @@ class V1::HomeController < ApplicationController
       user_url: user_url
     }
   end
+
+  def preflight
+    head :ok
+  end
 end

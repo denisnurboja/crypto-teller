@@ -27,6 +27,9 @@ CryptoTeller::Application.routes.draw do
     # Users
     post 'users' => 'users#create'
 
+    # CORS preflight
+    match '(*any)' => 'home#preflight', via: :options
+
     root 'home#index'
   end
 end
