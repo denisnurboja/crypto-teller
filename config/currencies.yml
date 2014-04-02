@@ -1,0 +1,31 @@
+DOGE:
+  id: 94
+  title: Dogecoin
+
+BTC:
+  id: 3
+  title: Bitcoin
+
+VTC:
+  id: 110
+  title: Vertcoin
+
+FTC:
+  id: 4
+  title: Feathercoin
+
+LTC:
+  id: 2
+  title: Litecoin
+
+PPC:
+  id: 18
+  title: Peercoin
+
+WDC:
+  id: 12
+  title: Worldcoin
+
+ZET:
+  id: 69
+  title: Zetacoin
