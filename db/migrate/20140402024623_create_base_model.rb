@@ -6,6 +6,7 @@ class CreateBaseModel < ActiveRecord::Migration
 
       t.references :user
 
+      t.integer :lock_version
       t.timestamps
     end
 
@@ -32,6 +33,7 @@ class CreateBaseModel < ActiveRecord::Migration
 
       t.references :account
 
+      t.integer :lock_version
       t.timestamps
     end
 
@@ -44,6 +46,7 @@ class CreateBaseModel < ActiveRecord::Migration
 
       t.references :account
 
+      t.integer :lock_version
       t.timestamps
     end
   end

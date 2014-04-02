@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20140402024623) do
     t.decimal  "balance",      default: 0.0
     t.decimal  "held_balance", default: 0.0
     t.integer  "user_id"
+    t.integer  "lock_version"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140402024623) do
     t.string   "currency"
     t.string   "transaction_id"
     t.integer  "account_id"
+    t.integer  "lock_version"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140402024623) do
     t.string   "status"
     t.string   "note"
     t.integer  "account_id"
+    t.integer  "lock_version"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
