@@ -15,6 +15,10 @@ CryptoTeller::Application.routes.draw do
     get  'orders/:id' => 'orders#show'
     post 'orders' => 'orders#create'
 
+    # Prices
+    get  'prices/buy' => 'prices#buy'
+    get  'prices/sell' => 'prices#sell'
+
     # Transfers
     get  'transfers' => 'transfers#index'
     get  'transfers/:id' => 'transfers#show'
