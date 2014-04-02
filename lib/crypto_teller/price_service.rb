@@ -26,15 +26,21 @@ module CryptoTeller
     private
 
     def coinbase_buy_price
-      coinbase_client.buy_price.amount
+      cache.fetch('coinbase_buy', expires_in: 10.minutes) do
+        coinbase_client.buy_price.amount
+      end
     end
 
     def coinbase_sell_price
-      coinbase_client.sell_price.amount
+      cache.fetch('coinbase_sell', expires_in: 10.minutes) do
+        coinbase_client.sell_price.amount
+      end
     end
 
     def spot_price(left, right)
-      cryptsy_client.market_by_pair(left, right).last_trade.to_f
+      cache.fetch("cryptsy_last_trade_#{left}_#{right}", expires_in: 10.minutes) do
+        cryptsy_client.market_by_pair(left, right).last_trade.to_f
+      end
     end
   end # PriceService
 end # CryptoTeller
