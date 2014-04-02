@@ -7,9 +7,18 @@ module CryptoTeller
 
   CRYPTSY_SUPPORT_EMAIL = 'support@cryptsy.com'
 
+  attr_writer :currency_data
   attr_writer :cryptsy_client
   attr_writer :cryptsy_web_client
   attr_writer :coinbase_client
+
+  def currency_data
+    unless @currency_data
+      @currency_data = Hashie::Mash.new(YAML.load_file(Rails.root.join('config', 'currencies.yml')))
+    end
+
+    @currency_data
+  end
 
   def cryptsy_client
     unless @cryptsy_client
