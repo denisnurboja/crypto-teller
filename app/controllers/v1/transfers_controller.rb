@@ -18,6 +18,8 @@ class V1::TransfersController < ApplicationController
     @transfer = current_account.transfers.build(transfer_params)
     @transfer.save!
 
+    TransferWorker.perform_async(@transfer.id)
+
     render json: @transfer, status: :created
   end
 
