@@ -53,6 +53,9 @@ GEM
     diff-lcs (1.2.5)
     domain_name (0.5.18)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (0.10.0)
+    dotenv-rails (0.10.0)
+      dotenv (= 0.10.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
     faraday (0.9.0)
@@ -177,6 +180,7 @@ DEPENDENCIES
   coinbase
   cryptsy
   devise
+  dotenv-rails
   faraday-cookie_jar
   nokogiri
   pry-rails
