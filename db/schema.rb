@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402024623) do
+ActiveRecord::Schema.define(version: 20140402194834) do
 
   create_table "accounts", force: true do |t|
     t.decimal  "balance",      default: 0.0
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20140402024623) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "orders", ["transaction_id"], name: "index_orders_on_transaction_id", unique: true
 
   create_table "transfers", force: true do |t|
     t.string   "direction"
