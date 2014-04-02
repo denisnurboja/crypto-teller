@@ -22,6 +22,9 @@ gem 'rotp'
 group :development do
   gem 'pry-rails'
   gem 'thin'
+
+  # Used for Sidekiq monitoring
+  gem 'sinatra'
 end
 
 group :test do
