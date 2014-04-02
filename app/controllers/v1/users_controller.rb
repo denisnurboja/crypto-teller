@@ -1,6 +1,4 @@
-class V1::UsersController < V1::BaseController
-  before_action :authenticate_user!, except: [:create]
-
+class V1::UsersController < ApplicationController
   # POST /users
   def create
     @user = User.create!(user_params)

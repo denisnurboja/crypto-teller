@@ -1,4 +1,4 @@
-class V1::UserController < V1::BaseController
+class V1::UserController < ApplicationController
   before_action :authenticate_user!
 
   # GET /user
