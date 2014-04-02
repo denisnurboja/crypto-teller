@@ -9,6 +9,8 @@ gem 'pundit'
 
 gem 'active_model_serializers'
 
+gem 'sidekiq'
+
 gem 'coinbase'
 gem 'cryptsy'
 
