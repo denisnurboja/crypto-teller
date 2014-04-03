@@ -34,17 +34,9 @@ module CryptoTeller
 
     def await_execution(market_id, order_id, amount)
       loop do
-        break if calculate_remaining(market_id, order_id, amount) == 0
+        break if client.orders(market_id).none? { |o| o.orderid == order_id }
         sleep RETRY_INTERVAL
       end
-    end
-
-    def calculate_remaining(market_id, order_id, amount)
-      trades = client.trades(market_id).find_all do |trade|
-        trade.order_id == order_id
-      end
-
-      amount - trades.map { |t| t.quantity.to_f }.inject(0, :+)
     end
   end # TradeService
 end # CryptoTeller
