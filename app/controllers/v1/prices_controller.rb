@@ -7,7 +7,7 @@ class V1::PricesController < ApplicationController
     result = price_service.from_usd(currency, quantity)
 
     render json: {
-      amount: result.round(8),
+      amount: result,
       currency: currency
     }
   end
@@ -20,7 +20,7 @@ class V1::PricesController < ApplicationController
     result = price_service.to_usd(currency, quantity)
 
     render json: {
-      amount: result.round(2),
+      amount: result,
       currency: 'USD'
     }
   end

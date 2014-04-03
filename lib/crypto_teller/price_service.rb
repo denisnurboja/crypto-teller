@@ -8,19 +8,19 @@ module CryptoTeller
     def from_usd(currency, amount)
       amount_btc = amount / coinbase_buy_price
       if currency == 'BTC'
-        amount_btc
+        amount_btc.round(8)
       else
-        amount_btc / spot_price(currency, 'BTC')
+        (amount_btc / spot_price(currency, 'BTC')).round(8)
       end
     end
 
     # From X to USD
     def to_usd(currency, amount)
       unless currency == 'BTC'
-        amount = amount * spot_price(currency, 'BTC')
+        amount = (amount * spot_price(currency, 'BTC')).round(8)
       end
 
-      amount * coinbase_sell_price
+      (amount * coinbase_sell_price).round(2)
     end
 
     private
