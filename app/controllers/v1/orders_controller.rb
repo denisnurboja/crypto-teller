@@ -18,7 +18,7 @@ class V1::OrdersController < ApplicationController
     @order = current_account.orders.build(order_params)
     @order.save!
 
-    OrderWorker.process_async(@order.id)
+    OrderWorker.perform_async(@order.id)
 
     render json: @order, status: :created
   end
