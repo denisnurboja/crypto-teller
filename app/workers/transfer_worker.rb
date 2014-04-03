@@ -20,12 +20,12 @@ class TransferWorker
         account.hold(transfer.amount)
         account.save!
       else
-        transfer.update_attributes!(status: 'rejected', note: 'Insufficient balance in account')
+        transfer.update!(status: 'rejected', note: 'Insufficient balance in account')
         return
       end
     end
 
-    transfer.update_attributes!(status: 'needs_review', note: 'Needs review from teller')
+    transfer.update!(status: 'needs_review', note: 'Needs review from teller')
   end
 
   def finalize(transfer, account)
@@ -36,7 +36,7 @@ class TransferWorker
     end
 
     account.save!
-    transfer.update_attributes!(status: 'completed', note: 'Transfer completed')
+    transfer.update!(status: 'completed', note: 'Transfer completed')
   end
 
 end
