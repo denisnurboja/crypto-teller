@@ -13,20 +13,25 @@ gem 'active_model_serializers'
 
 gem 'sidekiq'
 
+gem 'fluent-logger', '~> 0.4.7'
+
 gem 'coinbase'
-gem 'cryptsy'
+gem 'cryptsy', github: 'ianunruh/cryptsy'
 
 # Dependencies required to use the Cryptsy web client
 gem 'faraday-cookie_jar'
 gem 'nokogiri'
 gem 'rotp'
+gem 'gmail'
 
 group :development do
   gem 'pry-rails'
   gem 'thin'
 
+  gem 'foreman', require: false
+
   # Used for Sidekiq monitoring
-  gem 'sinatra'
+  gem 'sinatra', require: false
 end
 
 group :test do
