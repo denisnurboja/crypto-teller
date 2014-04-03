@@ -13,6 +13,7 @@ class ReceiveWorker
       address = Address.find_by(address: tx.address)
       if address
         logger.info "Processing deposit to #{tx.address} for #{tx.amount} #{tx.currency}"
+        normalize_exchange_account(tx)
         process(tx, address.account)
       else
         logger.debug "Ignoring deposit #{tx.trxid} to #{tx.address}"
@@ -37,5 +38,11 @@ class ReceiveWorker
 
     account.balance += amount
     account.save!
+  end
+
+  def normalize_exchange_account(tx)
+    unless tx.currency == 'BTC'
+      CryptoTeller.trade_service.instant_sell(tx.currency, 'BTC', tx.amount)
+    end
   end
 end

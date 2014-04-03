@@ -1,6 +1,7 @@
 require 'cryptsy/web_client'
 require 'crypto_teller/gmail_adapter'
 require 'crypto_teller/price_service'
+require 'crypto_teller/trade_service'
 
 module CryptoTeller
   extend self
@@ -63,6 +64,15 @@ module CryptoTeller
     end
 
     @price_service
+  end
+
+  def trade_service
+    unless @trade_service
+      @trade_service = TradeService.new
+      @trade_service.client = cryptsy_client
+    end
+
+    @trade_service
   end
 
   def gmail_adapter

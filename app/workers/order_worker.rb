@@ -7,16 +7,11 @@ class OrderWorker
     order = Order.find(order_id)
     account = order.account
 
-    if prepare(order, account)
+    if validate(order, account)
       amount = CryptoTeller.price_service.from_usd(order.currency, order.amount)
 
-      order.update_attributes!(note: 'Preparing exchange account for withdrawal')
       prepare_exchange_account(order.currency, amount)
-
-      order.update_attributes!(note: 'Placing withdrawal request on exchange')
       withdraw(order.currency, order.address, amount)
-
-      order.update_attributes!(note: 'Confirming withdrawal request')
       confirm_withdrawal
 
       finalize(order, account)
@@ -25,7 +20,7 @@ class OrderWorker
 
   private
 
-  def prepare(order, account)
+  def validate(order, account)
     if order.buy?
       if account.balance >= order.amount
         account.hold(order.amount)
@@ -44,13 +39,20 @@ class OrderWorker
 
   # Ensure that exchange account has sufficient balance for withdrawal
   def prepare_exchange_account(currency, amount)
+    client = CryptoTeller.cryptsy_client
+
+    balance = client.info.balances_available(currency.upcase).to_f
+    unless balance >= amount
+      # TODO What to do if insufficient BTC balance?
+      CryptoTeller.trade_service.instant_buy(currency, 'BTC', amount - balance)
+    end
   end
 
   # Submit withdrawal order through web client, confirm via email
   def withdraw(currency, address, amount)
-    currency_id = CryptoTeller.currency_service.currency_id(currency)
+    currency_id = CryptoTeller.currency_data.fetch(currency.upcase).id
 
-    web_client = CryptoTeller.web_client
+    web_client = CryptoTeller.cryptsy_web_client
 
     web_client.login
     web_client.pincode
@@ -60,7 +62,7 @@ class OrderWorker
   # Confirms withdrawal links in email
   def confirm_withdrawal
     adapter = CryptoTeller.gmail_adapter
-    web_client = CryptoTeller.web_client
+    web_client = CryptoTeller.cryptsy_web_client
 
     poller = Cryptsy::ConfirmationPoller.new(gmail_adapter, CONFIRM_WITHDRAWAL_PATTERN)
     poller.run_until_found.each do |link|
