@@ -5,18 +5,20 @@ class ReceiveWorker
   def perform
     client = CryptoTeller.cryptsy_client
 
-    transactions = client.transactions.select do |tx|
-      tx.type == 'Deposit'
+    transactions = Sidekiq.redis do |redis|
+      client.transactions.select do |tx|
+        tx.type == 'Deposit' && redis.sadd('deposits-seen', tx.trxid)
+      end
     end
 
     transactions.each do |tx|
       address = Address.find_by(address: tx.address)
       if address
-        log('sell_order.received', tx_id: tx.txrid, address: tx.address, currency: tx.currency, amount: tx.amount)
+        log('sell_order.received', tx_id: tx.trxid, address: tx.address, currency: tx.currency, amount: tx.amount)
         normalize_exchange_account(tx)
         process(tx, address.account)
       else
-        log('sell_order.ignored', tx_id: tx.txrid, address: tx.address)
+        log('sell_order.ignored', tx_id: tx.trxid, address: tx.address)
       end
     end
   end
