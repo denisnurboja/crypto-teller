@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20140402194834) do
   create_table "orders", force: true do |t|
     t.string   "direction"
     t.decimal  "amount"
-    t.string   "status"
+    t.string   "status",         default: "pending"
     t.string   "note"
     t.string   "address"
     t.string   "currency"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20140402194834) do
   create_table "transfers", force: true do |t|
     t.string   "direction"
     t.decimal  "amount"
-    t.string   "status"
+    t.string   "status",       default: "pending"
     t.string   "note"
     t.integer  "account_id"
     t.integer  "lock_version"

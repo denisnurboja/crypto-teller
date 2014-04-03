@@ -24,7 +24,7 @@ class CreateBaseModel < ActiveRecord::Migration
       t.string :direction
       t.decimal :amount
 
-      t.string :status
+      t.string :status, default: 'pending'
       t.string :note
 
       t.string :address
@@ -41,7 +41,7 @@ class CreateBaseModel < ActiveRecord::Migration
       t.string :direction
       t.decimal :amount
 
-      t.string :status
+      t.string :status, default: 'pending'
       t.string :note
 
       t.references :account
