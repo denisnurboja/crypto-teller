@@ -19,7 +19,7 @@ class OrderWorker
 
         finalize(order, account)
       rescue
-        recover(order, amount)
+        recover(order, account)
         raise
       end
     end
