@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   def setup_cors_headers
     headers['Access-Control-Allow-Origin'] = '*'
     headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, PATCH, DELETE, OPTIONS'
-    headers['Access-Control-Allow-Headers'] = 'Authorization'
+    headers['Access-Control-Allow-Headers'] = 'Authorization, Content-Type'
   end
 
   def authenticate_user!
