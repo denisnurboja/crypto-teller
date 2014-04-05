@@ -15,3 +15,11 @@ namespace :sidekiq do
     app.run!
   end
 end
+
+namespace :teller do
+  task :accept => :environment do
+    transfer = Transfer.last
+    transfer.update!(status: 'accepted')
+    TransferWorker.perform_async(transfer.id)
+  end
+end
